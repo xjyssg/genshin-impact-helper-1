@@ -107,7 +107,9 @@ class Sign(Base):
                     data=json.dumps(data, ensure_ascii=False)).text)
             except Exception as e:
                 raise Exception(e)
+            log.info(f'response {response}')
             code = response.get('retcode', 99999)
+            log.info(f'response code {code}')
             # 0:      success
             # -5003:  already checked in
             if code != 0:
