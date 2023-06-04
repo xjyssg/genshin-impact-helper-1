@@ -83,19 +83,19 @@ class Sign(Base):
                 'total_sign_day': total_sign_day,
                 'end': '',
             }
-#             if info_list.get('data',{}).get('is_sign') is True:
-#                 message['award_name'] = awards[total_sign_day - 1]['name']
-#                 message['award_cnt'] = awards[total_sign_day - 1]['cnt']
-#                 message['status'] = f"👀 Traveler, you've already checked in today"
-#                 message_list.append(self.message.format(**message))
-#                 return ''.join(message_list)
-#             else:
-#                 message['award_name'] = awards[total_sign_day]['name']
-#                 message['award_cnt'] = awards[total_sign_day]['cnt']
-#             if info_list.get('data',{}).get('first_bind') is True:
-#                 message['status'] = f'💪 Please check in manually once'
-#                 message_list.append(self.message.format(**message))
-#                 return ''.join(message_list)
+            if info_list.get('data',{}).get('is_sign') is True:
+                message['award_name'] = awards[total_sign_day - 1]['name']
+                message['award_cnt'] = awards[total_sign_day - 1]['cnt']
+                message['status'] = f"👀 Traveler, you've already checked in today"
+                message_list.append(self.message.format(**message))
+                return ''.join(message_list)
+            else:
+                message['award_name'] = awards[total_sign_day]['name']
+                message['award_cnt'] = awards[total_sign_day]['cnt']
+            if info_list.get('data',{}).get('first_bind') is True:
+                message['status'] = f'💪 Please check in manually once'
+                message_list.append(self.message.format(**message))
+                return ''.join(message_list)
 
             data = {
                 'act_id': CONFIG.OS_ACT_ID
