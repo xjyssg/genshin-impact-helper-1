@@ -65,7 +65,7 @@ class Sign(Base):
 
     def run(self):
         info_list = self.get_info()
-        log.info('info_list:{type(info_list)} {info_list}')
+        log.info(f'info_list:{type(info_list)} {info_list}')
         message_list = []
         if info_list:
             today = info_list.get('data',{}).get('today')
