@@ -149,8 +149,8 @@ if __name__ == '__main__':
     for i in range(len(cookie_list)):
         log.info(f'准备为 NO.{i + 1} 账号签到...')
         try:
-            ltoken = cookie_list[i].split('ltoken=')[1].split(';')[0]
-            uid = cookie_list[i].split('account_id=')[1].split(';')[0]
+            # ltoken = cookie_list[i].split('ltoken=')[1].split(';')[0]
+            # uid = cookie_list[i].split('account_id=')[1].split(';')[0]
             msg = f'	NO.{i + 1} 账号:{Sign(cookie_list[i]).run()}'
             msg_list.append(msg)
             success_num = success_num + 1
