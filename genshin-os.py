@@ -101,7 +101,7 @@ class Sign(Base):
             # today = info_list.get('data',{}).get('today')
             today = 'today'
             total_sign_day = info_list.get('data',{}).get('total_sign_day')
-            awards = Roles(self._cookie).get_awards().get('data',{}).get('awards')
+            # awards = Roles(self._cookie).get_awards().get('data',{}).get('awards')
             uid = str(self.uid).replace(
                 str(self.uid)[1:7], '******', 1)
 
@@ -115,14 +115,14 @@ class Sign(Base):
                 'end': '',
             }
             if info_list.get('data',{}).get('is_sign') is True:
-                message['award_name'] = awards[total_sign_day - 1]['name']
-                message['award_cnt'] = awards[total_sign_day - 1]['cnt']
+                # message['award_name'] = awards[total_sign_day - 1]['name']
+                # message['award_cnt'] = awards[total_sign_day - 1]['cnt']
                 message['status'] = f"👀 Traveler, you've already checked in today"
                 message_list.append(self.message.format(**message))
                 return ''.join(message_list)
             else:
-                message['award_name'] = awards[total_sign_day]['name']
-                message['award_cnt'] = awards[total_sign_day]['cnt']
+                # message['award_name'] = awards[total_sign_day]['name']
+                # message['award_cnt'] = awards[total_sign_day]['cnt']
             if info_list.get('data',{}).get('first_bind') is True:
                 message['status'] = f'💪 Please check in manually once'
                 message_list.append(self.message.format(**message))
