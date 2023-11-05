@@ -117,12 +117,16 @@ class Sign(Base):
             if info_list.get('data',{}).get('is_sign') is True:
                 # message['award_name'] = awards[total_sign_day - 1]['name']
                 # message['award_cnt'] = awards[total_sign_day - 1]['cnt']
+                message['award_name'] = 'xx'
+                message['award_cnt'] = 0
                 message['status'] = f"👀 Traveler, you've already checked in today"
                 message_list.append(self.message.format(**message))
                 return ''.join(message_list)
             else:
                 # message['award_name'] = awards[total_sign_day]['name']
                 # message['award_cnt'] = awards[total_sign_day]['cnt']
+                message['award_name'] = 'xx'
+                message['award_cnt'] = 0
                 log.info('skip')
             if info_list.get('data',{}).get('first_bind') is True:
                 message['status'] = f'💪 Please check in manually once'
