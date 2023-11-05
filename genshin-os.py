@@ -33,9 +33,12 @@ class Base(object):
 class Roles(Base):
     def get_awards(self):
         response = {}
+        payload = {
+            "act_id": "e202102251931481"
+        }
         try:
             response = req.to_python(req.request(
-                'get', CONFIG.OS_REWARD_URL, headers=self.get_header()).text)
+                'get', CONFIG.OS_REWARD_URL, headers=self.get_header(), json=payload).text)
         except json.JSONDecodeError as e:
             raise Exception(e)
 
@@ -54,12 +57,10 @@ class Sign(Base):
     def get_info(self):
         log.info('准备获取签到信息...')
         info_url = CONFIG.OS_INFO_URL
-        payload = {
-            "act_id": "e202102251931481"
-        }
+        
         try:
             response = req.request(
-                'get', info_url, headers=self.get_header(), json=payload).text
+                'get', info_url, headers=self.get_header()).text
         except Exception as e:
             raise Exception(e)
 
