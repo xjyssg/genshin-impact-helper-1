@@ -49,7 +49,7 @@ class Roles(Base):
         }
         try:
             response = req.to_python(req.request(
-                'get', CONFIG.OS_REWARD_URL, headers=self.get_header(), json=payload).text)
+                'post', CONFIG.OS_REWARD_URL, headers=self.get_header(), json=payload).text)
         except json.JSONDecodeError as e:
             raise Exception(e)
 
