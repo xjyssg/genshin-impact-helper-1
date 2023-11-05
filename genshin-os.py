@@ -61,8 +61,8 @@ class Roles(Base):
            'Sec-Ch-Ua': '"Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"'
            }
         try:
-            response = req.to_python(req.post(
-                 api_url, cookies=cookies,headers=header, json=payload).text)
+            response = req.to_python(req.request(
+                'post', api_url, cookies=cookies,headers=header, json=payload).text)
             log.info(self._cookie)
         except json.JSONDecodeError as e:
             raise Exception(e)
