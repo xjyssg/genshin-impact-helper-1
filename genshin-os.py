@@ -50,7 +50,7 @@ class Roles(Base):
         try:
             response = req.to_python(req.post(
                  CONFIG.OS_REWARD_URL, cookies=self._cookie,headers=self.get_header(), json=payload).text)
-            print(self._cookie)
+            log.info(self._cookie)
         except json.JSONDecodeError as e:
             raise Exception(e)
 
