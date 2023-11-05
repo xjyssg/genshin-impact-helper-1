@@ -54,9 +54,12 @@ class Sign(Base):
     def get_info(self):
         log.info('准备获取签到信息...')
         info_url = CONFIG.OS_INFO_URL
+        payload = {
+            "act_id": "e202102251931481"
+        }
         try:
             response = req.request(
-                'get', info_url, headers=self.get_header()).text
+                'get', info_url, headers=self.get_header(), json=payload).text
         except Exception as e:
             raise Exception(e)
 
