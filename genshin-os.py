@@ -47,9 +47,10 @@ class Roles(Base):
         payload = {
             "act_id": "e202102251931481"
         }
+        cookies = {'cookie_name': '_MHYUUID=68f9d4a0-93b4-4b1b-88dd-ee68483dcfd2; DEVICEFP_SEED_ID=b69323e711c9bb7d; DEVICEFP_SEED_TIME=1662767252919; ltoken=EQa4W7MwqMMUFcqo6BXrvymJtah162yhmpAB6Y7V; ltuid=60403549; _ga_QBR0VJWRTS=GS1.1.1665277350.1.0.1665277350.0.0.0; mi18nLang=zh-cn; _ga_JRFG0HQ22J=GS1.1.1677893760.123.1.1677893838.0.0.0; DEVICEFP=38d7ef3356fa9; HYV_LOGIN_PLATFORM_LIFECYCLE_ID={%22value%22:%229e4567c3-8fe8-4279-aa5e-0f5331f6350d%22}; HYV_LOGIN_PLATFORM_OPTIONAL_AGREEMENT={%22content%22:[]}; HYV_LOGIN_PLATFORM_TRACKING_MAP={}; _ga=GA1.2.227603524.1662767253; _gid=GA1.2.167386523.1699152564; _gat_gtag_UA_201411121_1=1; _ga_54PBK3QDF4=GS1.1.1699152563.199.0.1699152567.0.0.0; _ga_T9HTWX7777=GS1.1.1699152563.85.0.1699152567.0.0.0'}
         try:
             response = req.to_python(req.post(
-                 CONFIG.OS_REWARD_URL, cookies=self._cookie,headers=self.get_header(), json=payload).text)
+                 CONFIG.OS_REWARD_URL, cookies=cookies,headers=self.get_header(), json=payload).text)
             log.info(self._cookie)
         except json.JSONDecodeError as e:
             raise Exception(e)
