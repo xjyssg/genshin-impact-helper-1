@@ -48,8 +48,9 @@ class Roles(Base):
             "act_id": "e202102251931481"
         }
         try:
-            response = req.to_python(req.request(
-                'post', CONFIG.OS_REWARD_URL, headers=self.get_header(), json=payload).text)
+            response = req.to_python(req.post(
+                 CONFIG.OS_REWARD_URL, cookies=self._cookie,headers=self.get_header(), json=payload).text)
+            print(self._cookie)
         except json.JSONDecodeError as e:
             raise Exception(e)
 
