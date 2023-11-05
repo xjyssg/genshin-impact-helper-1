@@ -123,6 +123,7 @@ class Sign(Base):
             else:
                 # message['award_name'] = awards[total_sign_day]['name']
                 # message['award_cnt'] = awards[total_sign_day]['cnt']
+                log.info('skip')
             if info_list.get('data',{}).get('first_bind') is True:
                 message['status'] = f'💪 Please check in manually once'
                 message_list.append(self.message.format(**message))
