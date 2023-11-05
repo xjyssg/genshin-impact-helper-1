@@ -37,7 +37,7 @@ class _Config:
     OS_REFERER_URL = 'https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id={}'.format(OS_ACT_ID)
     OS_REWARD_URL = 'https://sg-hk4e-api.hoyolab.com/event/sol/sign?lang={}'.format(LANG)
     OS_ROLE_URL = 'https://api-os-takumi.mihoyo.com/auth/api/getUserAccountInfoByLToken?t={}&ltoken={}&uid={}'
-    OS_INFO_URL = 'https://hk4e-api-os.mihoyo.com/event/sol/info?lang={}&act_id={}'.format(LANG, OS_ACT_ID)
+    OS_INFO_URL = 'https://hk4e-api-os.mihoyo.com/event/sol/info?lang={}'.format(LANG)
     OS_SIGN_URL = 'https://hk4e-api-os.mihoyo.com/event/sol/sign?lang={}'.format(LANG)
     # weibo
     CONTAINER_ID = '100808fc439dedbb06ca5fd858848e521b8716'
