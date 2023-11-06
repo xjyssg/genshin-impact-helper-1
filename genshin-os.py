@@ -107,7 +107,7 @@ class Sign(Base):
                 str(self.uid)[1:7], '******', 1)
 
             log.info(f'准备为旅行者 {uid} 签到...')
-            time.sleep(10)
+            time.sleep(1)
             message = {
                 'today': today,
                 'region_name': '',
@@ -139,9 +139,21 @@ class Sign(Base):
             }
 
             try:
+                api_url = 'https://sg-hk4e-api.hoyolab.com/event/sol/sign?lang=zh-cn'
+                cookies = {'cookie_name': self._cookie}
+                header = {'Content-Type': 'application/json;charset=UTF-8',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
+                   'authority':'sg-hk4e-api.hoyolab.com',
+                   'Accept-Encoding':'gzip, deflate, br',
+                   'Accept-Language':'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+                   'Origin':'https://act.hoyolab.com',
+                   'Referer':'https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&hyl_auth_required=true&hyl_presentation_style=fullscreen&utm_source=hoyolab&utm_medium=tools&lang=zh-cn&bbs_theme=light&bbs_theme_device=1',
+                   'Accept':'application/json, text/plain, */*',
+                   'X-Rpc-Device_id':'68f9d4a0-93b4-4b1b-88dd-ee68483dcfd2',
+                   'Sec-Ch-Ua': '"Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"'
+                   }
                 response = req.to_python(req.request(
-                    'post', CONFIG.OS_SIGN_URL, headers=self.get_header(),
-                    data=json.dumps(data, ensure_ascii=False)).text)
+                'post', api_url, cookies=cookies,headers=header, json=payload).text)
             except Exception as e:
                 raise Exception(e)
             log.info(f'response {response}')
