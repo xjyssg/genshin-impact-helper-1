@@ -73,7 +73,10 @@ class Roles(Base):
 class Sign(Base):
     def __init__(self, cookies: str = None):
         super(Sign, self).__init__(cookies)
-        self.uid = uid
+        try:
+            self.uid = cookies.split('account_id_v2=')[1].split(';')[0]
+        except (IndexError, AttributeError):
+            self.uid = 'unknown'
 
     def get_header(self):
         header = super(Sign, self).get_header()
@@ -97,6 +100,8 @@ class Sign(Base):
         info_list = self.get_info()
         log.info(f'info_list: {info_list}')
         message_list = []
+        if not info_list or info_list.get('data') is None:
+            return "登录失败: " + info_list.get('message', '未知错误')
         if info_list:
             # today = info_list.get('data',{}).get('today')
             today = 'today'
@@ -188,23 +193,37 @@ if __name__ == '__main__':
     """
     # Github Actions用户请到Repo的Settings->Secrets里设置变量,变量名字必须与上述参数变量名字完全一致,否则无效!!!
     # Name=<变量名字>,Value=<获取的值>
-    OS_COOKIE = ''
+    # 从环境变量获取COOKIE
+    OS_COOKIE = os.environ.get('OS_COOKIE', '')
+    if not OS_COOKIE.strip():
+        log.error('未配置有效的COOKIE环境变量(OS_COOKIE)')
+        exit(1)
 
-    if os.environ.get('OS_COOKIE', '') != '':
-        OS_COOKIE = os.environ['OS_COOKIE']
-
-    cookie_list = OS_COOKIE.split('#')
+    cookie_list = [c for c in OS_COOKIE.split('#') if c.strip()]
+    if not cookie_list:
+        log.error('未配置有效的COOKIE，请检查OS_COOKIE设置')
+        exit(1)
+        
     log.info(f'检测到共配置了 {len(cookie_list)} 个帐号')
     for i in range(len(cookie_list)):
         log.info(f'准备为 NO.{i + 1} 账号签到...')
         try:
-            # ltoken = cookie_list[i].split('ltoken=')[1].split(';')[0]
-            uid = cookie_list[i].split('account_id=')[1].split(';')[0]
-            msg = f'	NO.{i + 1} 账号:{Sign(cookie_list[i]).run()}'
+            cookie = cookie_list[i]
+            log.debug(f'原始COOKIE: {cookie}')
+            
+            # 提取uid
+            try:
+                uid = cookie.split('account_id_v2=')[1].split(';')[0]
+            except IndexError:
+                log.error(f'COOKIE格式错误，缺少account_id_v2: {cookie}')
+                uid = 'unknown'
+                
+            msg = f'	NO.{i + 1} 账号:{Sign(cookie).run()}'
             msg_list.append(msg)
             success_num = success_num + 1
         except Exception as e:
-            msg = f'	NO.{i + 1} 账号:\n    {e}'
+            log.error(f'处理NO.{i + 1}账号时出错:', exc_info=True)
+            msg = f'	NO.{i + 1} 账号:\n    错误类型: {type(e).__name__}\n    错误详情: {str(e)}'
             msg_list.append(msg)
             fail_num = fail_num + 1
             log.error(msg)
@@ -215,4 +234,3 @@ if __name__ == '__main__':
         log.error('异常退出')
         exit(ret)
     log.info('任务结束')
-
